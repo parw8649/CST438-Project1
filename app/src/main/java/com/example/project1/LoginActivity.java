@@ -18,7 +18,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button signUp;
 
     /**
-     * this is a comment
+     * this is a comment ok
      */
 
 
