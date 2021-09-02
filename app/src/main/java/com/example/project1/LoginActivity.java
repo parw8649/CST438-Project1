@@ -17,8 +17,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button signUp;
 
 
-    String user = "admin";
-    String pass = "admin";
+    String userTest = "admin";
+    String passTest = "admin";
 
 
     @Override
@@ -35,11 +35,11 @@ public class LoginActivity extends AppCompatActivity {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(String.valueOf(RegisterActivity.class));
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });
+
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,9 +47,9 @@ public class LoginActivity extends AppCompatActivity {
                 if(username.getText().toString().isEmpty() || password.getText().toString().isEmpty())
                 {
                     Toast.makeText(LoginActivity.this, "Empty Data", Toast.LENGTH_LONG).show();
-                }else if(username.getText().toString().equals(user)){
+                }else if(username.getText().toString().equals(userTest)){
                     //check password
-                    if(password.getText().toString().equals(pass)){
+                    if(password.getText().toString().equals(passTest)){
                         Toast.makeText(LoginActivity.this, "Successful login", Toast.LENGTH_LONG).show();
 //                        Intent i = new Intent(this, LandingPage.class);
 //                        startActivity(i);

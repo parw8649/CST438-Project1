@@ -55,11 +55,13 @@
         android:id="@+id/btnRegister"
         android:layout_width="203dp"
         android:layout_height="92dp"
-        android:layout_marginStart="108dp"
+        android:layout_marginStart="116dp"
+        android:backgroundTint="#809C27B0"
         android:text="Register"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etConfirmPassword"
-        app:layout_constraintVertical_bias="0.212" />
+        app:layout_constraintVertical_bias="0.206" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

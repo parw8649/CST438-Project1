@@ -11,14 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText username;
-    private EditText password;
+    private EditText user;
+    private EditText pass;
     private EditText confirmPassword;
     private Button register;
-
-
-    String user = "admin";
-    String pass = "admin";
 
 
     @Override
@@ -27,27 +23,20 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
 
-        username = findViewById(R.id.name);
-        password = findViewById(R.id.pass);
+        user = findViewById(R.id.name);
+        pass = findViewById(R.id.pass);
         confirmPassword = findViewById(R.id.etConfirmPassword);
         register = findViewById(R.id.btnRegister);
 
-//        register.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////              Intent i = new Intent(this, Register.class);
-////               startActivity(i);
-//            }
-//        });
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (username.getText().toString().isEmpty() || password.getText().toString().isEmpty() || confirmPassword.getText().toString().isEmpty()) {
+                if (user.getText().toString().isEmpty() || pass.getText().toString().isEmpty() || confirmPassword.getText().toString().isEmpty()) {
                     Toast.makeText(RegisterActivity.this, "Empty Data", Toast.LENGTH_LONG).show();
-                } else if (password.getText().toString().equals(confirmPassword)) {
+                } else if (pass.getText().toString().equals(confirmPassword.getText().toString())) {
                     //successful login
-                    Toast.makeText(RegisterActivity.this, "Successful login", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterActivity.this, "Correct Password", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                     startActivity(intent);
                 } else {
