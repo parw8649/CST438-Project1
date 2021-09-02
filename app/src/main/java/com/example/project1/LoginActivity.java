@@ -17,6 +17,10 @@ public class LoginActivity extends AppCompatActivity {
     private Button login;
     private Button signUp;
 
+    /**
+     * this is a comment ok
+     */
+
 
     String user = "admin";
     String pass = "admin";
