@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Project1</string>
+    <string name="noLogsMessage">No records, time to go to gym</string>
+    <string name="et_hint_username">Username</string>
+    <string name="et_hint_password">Password</string>
+    <string name="btn_Login">Login</string>
+    <string name="logout">Logout?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="logoutMenu">Logout</string>
+    <string name="mainAddNewExercise">Add New Exercise</string>
+    <string name="button_text_back">Back</string>
+    <string name="tv_exercise_list_name">Exercise List</string>
+    <string name="et_hint_reps">Repetitions</string>
+    <string name="et_hint_weight">Weight</string>
+    <string name="dialog_submit">Submit</string>
 </resources>
