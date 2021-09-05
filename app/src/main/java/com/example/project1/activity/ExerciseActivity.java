@@ -76,10 +76,10 @@ public class ExerciseActivity extends AppCompatActivity {
         //TODO: Replace below code with Third party Fitness API Integration
         List<Exercise> exerciseList = fitnessLogDao.getAllExerciseList();
         if(exerciseList.size() == 0) {
-            fitnessLogDao.insert(new Exercise("Lunges"), new Exercise("PushUps"),
+           /* fitnessLogDao.insert(new Exercise("Lunges"), new Exercise("PushUps"),
                     new Exercise("Squats"), new Exercise("Dumbbell rows"),
                     new Exercise("Planks"), new Exercise("Biceps"),
-                    new Exercise("Triceps"), new Exercise("PullUps"));
+                    new Exercise("Triceps"), new Exercise("PullUps"));*/
         }
         refreshDisplay(exerciseList);
     }
