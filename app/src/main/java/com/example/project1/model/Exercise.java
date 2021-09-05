@@ -57,4 +57,9 @@ public class Exercise {
     public String toString() {
         return exerciseName;
     }
+
+    public String getExerciseInfo() {
+
+        return "Exercise Details\nName: " + exerciseName + "\n" + "Description: " + exerciseDescription;
+    }
 }
