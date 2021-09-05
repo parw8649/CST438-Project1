@@ -9,11 +9,31 @@ import com.example.project1.db.AppDatabase;
 public class Exercise {
 
     @PrimaryKey(autoGenerate = true)
+    private int id;
+
     private int exerciseId;
-
     private String exerciseName;
+    private String exerciseDescription;
 
-    public Exercise(String exerciseName) {
+    public Exercise(int exerciseId, String exerciseName, String exerciseDescription) {
+        this.exerciseId = exerciseId;
+        this.exerciseName = exerciseName;
+        this.exerciseDescription = exerciseDescription;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getExerciseName() {
+        return exerciseName;
+    }
+
+    public void setExerciseName(String exerciseName) {
         this.exerciseName = exerciseName;
     }
 
@@ -25,16 +45,21 @@ public class Exercise {
         this.exerciseId = exerciseId;
     }
 
-    public String getExerciseName() {
-        return exerciseName;
+    public String getExerciseDescription() {
+        return exerciseDescription;
     }
 
-    public void setExerciseName(String exerciseName) {
-        this.exerciseName = exerciseName;
+    public void setExerciseDescription(String exerciseDescription) {
+        this.exerciseDescription = exerciseDescription;
     }
 
     @Override
     public String toString() {
         return exerciseName;
+    }
+
+    public String getExerciseInfo() {
+
+        return "Exercise Details\nName: " + exerciseName + "\n" + "Description: " + exerciseDescription;
     }
 }

@@ -12,7 +12,7 @@ import com.example.project1.model.FitnessLog;
 import com.example.project1.model.User;
 import com.example.project1.db.typeConverters.DateTypeConverter;
 
-@Database(entities = {FitnessLog.class, User.class, Exercise.class}, version = 2)
+@Database(entities = {FitnessLog.class, User.class, Exercise.class}, version = 3)
 @TypeConverters(DateTypeConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 

@@ -1,9 +1,5 @@
 package com.example.project1.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -15,16 +11,27 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project1.R;
 import com.example.project1.db.AppDatabase;
 import com.example.project1.db.FitnessLogDao;
+import com.example.project1.external.ExerciseData;
+import com.example.project1.external.ExerciseDataInfo;
+import com.example.project1.external.ExternalProcess;
+import com.example.project1.external.FitnessAPI;
 import com.example.project1.model.Exercise;
 import com.example.project1.model.FitnessLog;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ExerciseActivity extends AppCompatActivity {
 
@@ -36,15 +43,11 @@ public class ExerciseActivity extends AppCompatActivity {
     private SharedPreferences mPreferences = null;
 
     private ListView listView;
-    private ArrayAdapter<String> adapter;
-
-    private AlertDialog.Builder dialogBuilder;
-    private AlertDialog alertDialog;
     private Dialog dialog;
 
-    private EditText repetitions, weight;
-
     private FitnessLogDao fitnessLogDao;
+
+    private List<Exercise> exerciseList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,15 +76,53 @@ public class ExerciseActivity extends AppCompatActivity {
 
     private void initExerciseData() {
 
-        //TODO: Replace below code with Third party Fitness API Integration
-        List<Exercise> exerciseList = fitnessLogDao.getAllExerciseList();
+        exerciseList = fitnessLogDao.getAllExerciseList();
         if(exerciseList.size() == 0) {
-            fitnessLogDao.insert(new Exercise("Lunges"), new Exercise("PushUps"),
-                    new Exercise("Squats"), new Exercise("Dumbbell rows"),
-                    new Exercise("Planks"), new Exercise("Biceps"),
-                    new Exercise("Triceps"), new Exercise("PullUps"));
+            fetchExerciseInfo();
         }
-        refreshDisplay(exerciseList);
+
+        refreshDisplay();
+    }
+
+    private void fetchExerciseInfo() {
+
+        FitnessAPI fitnessAPI = ExternalProcess.getFitnessAPIInstance();
+
+        Call<ExerciseData> exerciseInfo = fitnessAPI.getAllExerciseInfo();
+
+        exerciseInfo.enqueue(new Callback<ExerciseData>() {
+            @Override
+            public void onResponse(Call<ExerciseData> call, Response<ExerciseData> response) {
+                if (!response.isSuccessful()) {
+                    return;
+                }
+
+                ExerciseData exerciseData = response.body();
+
+                if(exerciseData != null) {
+                    fetchExerciseData(exerciseData);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ExerciseData> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void fetchExerciseData(ExerciseData exerciseData) {
+
+        exerciseList = new ArrayList<>();
+
+        for(ExerciseDataInfo exerciseDataInfo : exerciseData.getResults()) {
+
+            Exercise exercise = new Exercise(exerciseDataInfo.getId(), exerciseDataInfo.getName(), exerciseDataInfo.getDescription());
+            fitnessLogDao.insert(exercise);
+            exerciseList.add(exercise);
+        }
+
+        refreshDisplay();
     }
 
     private void wireUpDisplay() {
@@ -138,8 +179,11 @@ public class ExerciseActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid Exercise fetched!", Toast.LENGTH_LONG).show();
         } else {
 
-            repetitions = view.findViewById(R.id.et_repetitions);
-            weight = view.findViewById(R.id.et_weight);
+            TextView exerciseInfo = view.findViewById(R.id.tv_operations);
+            exerciseInfo.setText(exercise.getExerciseInfo());
+
+            EditText repetitions = view.findViewById(R.id.et_repetitions);
+            EditText weight = view.findViewById(R.id.et_weight);
 
             int reps = Integer.parseInt(repetitions.getText().toString());
             int inputWeight = Integer.parseInt(weight.getText().toString());
@@ -173,7 +217,9 @@ public class ExerciseActivity extends AppCompatActivity {
         mPreferences = this.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
     }
 
-    private void refreshDisplay(List<Exercise> exerciseList) {
+    private void refreshDisplay() {
+
+        System.out.println("Inside Refresh Display");
 
         if(exerciseList.isEmpty()) {
             exerciseList = fitnessLogDao.getAllExerciseList();
@@ -185,7 +231,9 @@ public class ExerciseActivity extends AppCompatActivity {
         }
 
         // Adding items to listview
-        adapter = new ArrayAdapter<>(this, R.layout.operational_list_view, R.id.operational_exercise_name, exercises);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.operational_list_view, R.id.operational_exercise_name, exercises);
         listView.setAdapter(adapter);
+
+        System.out.println("Exited Refresh Display");
     }
 }
