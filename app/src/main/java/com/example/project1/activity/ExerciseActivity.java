@@ -19,7 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.project1.R;
 import com.example.project1.db.AppDatabase;
 import com.example.project1.db.FitnessLogDao;
-import com.example.project1.external.ExerciseData;
+import com.example.project1.external.FitnessData;
 import com.example.project1.external.ExerciseDataInfo;
 import com.example.project1.external.ExternalProcess;
 import com.example.project1.external.FitnessAPI;
@@ -88,34 +88,34 @@ public class ExerciseActivity extends AppCompatActivity {
 
         FitnessAPI fitnessAPI = ExternalProcess.getFitnessAPIInstance();
 
-        Call<ExerciseData> exerciseInfo = fitnessAPI.getAllExerciseInfo();
+        Call<FitnessData> exerciseInfo = fitnessAPI.getAllExerciseInfo();
 
-        exerciseInfo.enqueue(new Callback<ExerciseData>() {
+        exerciseInfo.enqueue(new Callback<FitnessData>() {
             @Override
-            public void onResponse(Call<ExerciseData> call, Response<ExerciseData> response) {
+            public void onResponse(Call<FitnessData> call, Response<FitnessData> response) {
                 if (!response.isSuccessful()) {
                     return;
                 }
 
-                ExerciseData exerciseData = response.body();
+                FitnessData fitnessData = response.body();
 
-                if(exerciseData != null) {
-                    fetchExerciseData(exerciseData);
+                if(fitnessData != null) {
+                    fetchExerciseData(fitnessData);
                 }
             }
 
             @Override
-            public void onFailure(Call<ExerciseData> call, Throwable t) {
+            public void onFailure(Call<FitnessData> call, Throwable t) {
 
             }
         });
     }
 
-    private void fetchExerciseData(ExerciseData exerciseData) {
+    private void fetchExerciseData(FitnessData fitnessData) {
 
         exerciseList = new ArrayList<>();
 
-        for(ExerciseDataInfo exerciseDataInfo : exerciseData.getResults()) {
+        for(ExerciseDataInfo exerciseDataInfo : fitnessData.getResults()) {
 
             Exercise exercise = new Exercise(exerciseDataInfo.getId(), exerciseDataInfo.getName(), exerciseDataInfo.getDescription());
             fitnessLogDao.insert(exercise);

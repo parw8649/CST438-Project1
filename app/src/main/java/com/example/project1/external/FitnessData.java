@@ -2,12 +2,12 @@ package com.example.project1.external;
 
 import java.util.List;
 
-public class ExerciseData {
+public class FitnessData<T> {
 
     private int count;
     private String next;
     private String previous;
-    private List<ExerciseDataInfo> results;
+    private List<T> results;
 
     public int getCount() {
         return count;
@@ -33,11 +33,10 @@ public class ExerciseData {
         this.previous = previous;
     }
 
-    public List<ExerciseDataInfo> getResults() {
+    public List<T> getResults() {
         return results;
     }
-
-    public void setResults(List<ExerciseDataInfo> results) {
+    public void setResults(List<T> results) {
         this.results = results;
     }
 }
