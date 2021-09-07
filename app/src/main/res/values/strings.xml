@@ -21,5 +21,8 @@
     <string name="textView_login">Log In</string>
     <string name="btn_name_register">Register</string>
     <string name="tv_new_user">New user?</string>
+    <string name="deleteExercise"> Delete Exercise </string>
+    <string name="displayExercise"> Display Exercise </string>
+
 
 </resources>

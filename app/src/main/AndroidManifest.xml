@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.project1">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,6 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Fitness">
+        <activity
+            android:name=".activity.DisplaySelectedExercise"
+            android:exported="true" />
+        <activity
+            android:name=".activity.DisplayExerciseActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.DeleteExerciseActivity"
+            android:exported="true" />
         <activity
             android:name=".activity.SignUpActivity"
             android:exported="true" />

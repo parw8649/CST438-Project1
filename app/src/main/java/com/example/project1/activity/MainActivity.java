@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.project1.model.Exercise;
 import com.example.project1.model.FitnessLog;
 import com.example.project1.R;
 import com.example.project1.model.User;
@@ -106,6 +107,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void deleteExercise(Exercise exercise) {
+        fitnessLogDao.delete(exercise);
+    }
+
     private void getPrefs() {
         mPreferences = this.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
     }
@@ -116,11 +121,20 @@ public class MainActivity extends AppCompatActivity {
         mMainDisplay.setMovementMethod(new ScrollingMovementMethod());
 
         Button mSubmitButton = findViewById(R.id.mainSubmitButton);
+        Button mDisplayExercise = findViewById(R.id.displayExercise);
+        Button mDeleteExercise = findViewById(R.id.deleteExercise);
 
         mSubmitButton.setOnClickListener(v -> {
             Intent intent = ExerciseActivity.intentFactory(this, mUserId);
             startActivity(intent);
         });
+
+        mDisplayExercise.setOnClickListener(v -> {
+            Intent intent = DisplayExerciseActivity.intentFactory(this, mUserId);
+            startActivity(intent);
+        });
+
+
     }
 
     private void getDatabase() {

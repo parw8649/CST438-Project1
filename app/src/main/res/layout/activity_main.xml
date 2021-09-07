@@ -34,4 +34,49 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mainGymLogDisplay"
         app:layout_constraintVertical_bias="0.078" />
+
+    <Button
+        android:id="@+id/displayExercise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/displayExercise"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deleteExercise"
+        app:layout_constraintVertical_bias="0.082"
+        android:importantForAutofill="no"
+        tools:ignore="NotSibling" />
+
+    <Button
+        android:id="@+id/deleteExercise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/deleteExercise"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deleteExercise"
+        app:layout_constraintVertical_bias="0.082"
+        android:importantForAutofill="no"
+        tools:ignore="NotSibling" />
+
+<!--    <Button-->
+<!--        android:id="@+id/deleteExercise"-->
+<!--        android:layout_width="245dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:backgroundTint="@color/black"-->
+<!--        android:text="@string/deleteExercise"-->
+<!--        android:textSize="24sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.566"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/deleteExercise"-->
+<!--        app:layout_constraintVertical_bias="1.0"-->
+<!--        tools:ignore="InvalidId,NotSibling" />-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>
