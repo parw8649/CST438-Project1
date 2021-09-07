@@ -8,7 +8,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="logoutMenu">Logout</string>
-    <string name="mainAddNewExercise">Add New Exercise</string>
+    <string name="mainAddNewExercise">Add New</string>
     <string name="button_text_back">Back</string>
     <string name="tv_exercise_list_name">Exercise List</string>
     <string name="textView_signUp">Sign Up</string>
@@ -21,5 +21,7 @@
     <string name="textView_login">Log In</string>
     <string name="btn_name_register">Register</string>
     <string name="tv_new_user">New user?</string>
+    <string name="et_hint_workout_name">Workout name</string>
+    <string name="et_hint_workout_description">Workout description</string>
 
 </resources>
