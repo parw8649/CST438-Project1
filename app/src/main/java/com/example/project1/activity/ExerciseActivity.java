@@ -207,29 +207,28 @@ public class ExerciseActivity extends AppCompatActivity {
 
         WorkoutDataInfo workoutDataInfo = new WorkoutDataInfo(workoutName, workoutDescription);
 
-        Call<FitnessData<WorkoutDataInfo>> workoutInfo = fitnessAPI.sendWorkoutInfo(workoutDataInfo);
+        Call<WorkoutDataInfo> workoutInfo = fitnessAPI.sendWorkoutInfo(workoutDataInfo);
 
-        workoutInfo.enqueue(new Callback<FitnessData<WorkoutDataInfo>>() {
+        workoutInfo.enqueue(new Callback<WorkoutDataInfo>() {
             @Override
-            public void onResponse(Call<FitnessData<WorkoutDataInfo>> call, Response<FitnessData<WorkoutDataInfo>> response) {
+            public void onResponse(Call<WorkoutDataInfo> call, Response<WorkoutDataInfo> response) {
                 if (!response.isSuccessful()) {
                     return;
                 }
 
-                FitnessData<WorkoutDataInfo> fitnessData = response.body();
+                WorkoutDataInfo dataInfo = response.body();
 
-                if(fitnessData != null) {
-                    WorkoutDataInfo workoutDataInfo = fitnessData.getResults().get(0);
+                if(dataInfo != null) {
 
                     FitnessLog fitnessLog = new FitnessLog(exerciseName, inputWeight, reps, mUserId,
-                            workoutDataInfo.getId(), workoutName, workoutDescription);
+                            dataInfo.getId(), workoutName, workoutDescription);
 
                     fitnessLogDao.insert(fitnessLog);
                 }
             }
 
             @Override
-            public void onFailure(Call<FitnessData<WorkoutDataInfo>> call, Throwable t) {
+            public void onFailure(Call<WorkoutDataInfo> call, Throwable t) {
 
             }
         });

@@ -111,6 +111,7 @@ public class FitnessLog {
         String output = mExercise + " " + mWeight + " : " + mReps;
         output += "\n" + getDate();
         output += "\nUserId =" + mUserId;
+        output += "\nWorkoutId: " + workoutId;
         output += "\nWorkout name: " + workoutName;
         output += "\nWorkout description: " + workoutDescription;
 

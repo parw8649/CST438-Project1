@@ -16,5 +16,5 @@ public interface FitnessAPI {
 
     @Headers({"Content-Type: application/json", "Authorization: " + ExternalProcess.AUTH_TOKEN})
     @POST("workout/?format=json")
-    Call<FitnessData<WorkoutDataInfo>> sendWorkoutInfo(@Body WorkoutDataInfo workoutDataInfo);
+    Call<WorkoutDataInfo> sendWorkoutInfo(@Body WorkoutDataInfo workoutDataInfo);
 }
