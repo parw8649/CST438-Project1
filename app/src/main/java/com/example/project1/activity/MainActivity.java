@@ -1,6 +1,7 @@
 package com.example.project1.activity;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String USER_ID_KEY = "com.example.project1.userIdKey";
     private static final String PREFS = "com.example.project1.prefs";
     private TextView mMainDisplay;
+    private Button mDeleteButton;
+    List<FitnessLog> mGymLogs;
+    private Dialog dialog;
 
     private FitnessLogDao fitnessLogDao;
 
@@ -107,8 +111,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void deleteExercise(Exercise exercise) {
-        fitnessLogDao.delete(exercise);
+    private void deleteFitnessLog(FitnessLog log) {
+        fitnessLogDao.delete(log);
     }
 
     private void getPrefs() {
@@ -118,19 +122,21 @@ public class MainActivity extends AppCompatActivity {
     private void wireUpDisplay() {
 
         mMainDisplay = findViewById(R.id.mainGymLogDisplay);
+
         mMainDisplay.setMovementMethod(new ScrollingMovementMethod());
 
         Button mSubmitButton = findViewById(R.id.mainSubmitButton);
-        Button mDisplayExercise = findViewById(R.id.displayExercise);
-        Button mDeleteExercise = findViewById(R.id.deleteExercise);
+        mDeleteButton = findViewById(R.id.deleteButton);
 
+        mDeleteButton.setOnClickListener(v -> {
+//            dialog = new Dialog(this);
+//            dialog.setContentView(v);
+//            dialog.show();
+            deleteFitnessLog(mGymLogs.get(0));
+            refreshDisplay();
+        });
         mSubmitButton.setOnClickListener(v -> {
             Intent intent = ExerciseActivity.intentFactory(this, mUserId);
-            startActivity(intent);
-        });
-
-        mDisplayExercise.setOnClickListener(v -> {
-            Intent intent = DisplayExerciseActivity.intentFactory(this, mUserId);
             startActivity(intent);
         });
 
@@ -142,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void refreshDisplay() {
-        List<FitnessLog> mGymLogs = fitnessLogDao.getFitnessLogsByUserId(mUserId);
+         mGymLogs = fitnessLogDao.getFitnessLogsByUserId(mUserId);
 
         if(mGymLogs.size() == 0) {
             mMainDisplay.setText(R.string.noLogsMessage);

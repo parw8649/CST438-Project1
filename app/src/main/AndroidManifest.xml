@@ -12,15 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Fitness">
         <activity
-            android:name=".activity.DisplaySelectedExercise"
-            android:exported="true" />
-        <activity
-            android:name=".activity.DisplayExerciseActivity"
-            android:exported="true" />
-        <activity
-            android:name=".activity.DeleteExerciseActivity"
-            android:exported="true" />
-        <activity
             android:name=".activity.SignUpActivity"
             android:exported="true" />
         <activity android:name=".activity.ExerciseActivity" />

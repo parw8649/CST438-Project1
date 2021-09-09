@@ -45,7 +45,7 @@ public interface FitnessLogDao {
     void update(User... users);
 
     @Delete
-    void delete(User user);
+    void deleteFitnessLog(FitnessLog log);
 
     @Query("SELECT * FROM " + AppDatabase.USER_TABLE)
     List<User> getAllUsers();

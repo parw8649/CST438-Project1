@@ -19,10 +19,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.project1.R;
 import com.example.project1.db.AppDatabase;
 import com.example.project1.db.FitnessLogDao;
-import com.example.project1.external.ExerciseData;
+import com.example.project1.external.FitnessData;
 import com.example.project1.external.ExerciseDataInfo;
 import com.example.project1.external.ExternalProcess;
 import com.example.project1.external.FitnessAPI;
+import com.example.project1.external.WorkoutDataInfo;
 import com.example.project1.model.Exercise;
 import com.example.project1.model.FitnessLog;
 
@@ -88,34 +89,36 @@ public class ExerciseActivity extends AppCompatActivity {
 
         FitnessAPI fitnessAPI = ExternalProcess.getFitnessAPIInstance();
 
-        Call<ExerciseData> exerciseInfo = fitnessAPI.getAllExerciseInfo();
+        Call<FitnessData<ExerciseDataInfo>> exerciseInfo = fitnessAPI.getAllExerciseInfo();
 
-        exerciseInfo.enqueue(new Callback<ExerciseData>() {
+        exerciseInfo.enqueue(new Callback<FitnessData<ExerciseDataInfo>>() {
             @Override
-            public void onResponse(Call<ExerciseData> call, Response<ExerciseData> response) {
+            public void onResponse(Call<FitnessData<ExerciseDataInfo>> call, Response<FitnessData<ExerciseDataInfo>> response) {
                 if (!response.isSuccessful()) {
                     return;
                 }
 
-                ExerciseData exerciseData = response.body();
+                FitnessData<ExerciseDataInfo> fitnessData = response.body();
 
-                if(exerciseData != null) {
-                    fetchExerciseData(exerciseData);
+                if(fitnessData != null) {
+                    fetchExerciseData(fitnessData);
                 }
             }
 
             @Override
-            public void onFailure(Call<ExerciseData> call, Throwable t) {
+            public void onFailure(Call<FitnessData<ExerciseDataInfo>> call, Throwable t) {
 
             }
         });
     }
 
-    private void fetchExerciseData(ExerciseData exerciseData) {
+    private void fetchExerciseData(FitnessData<ExerciseDataInfo> fitnessData) {
 
         exerciseList = new ArrayList<>();
 
-        for(ExerciseDataInfo exerciseDataInfo : exerciseData.getResults()) {
+        List<ExerciseDataInfo> exerciseDataInfoList = fitnessData.getResults();
+
+        for(ExerciseDataInfo exerciseDataInfo : exerciseDataInfoList) {
 
             Exercise exercise = new Exercise(exerciseDataInfo.getId(), exerciseDataInfo.getName(), exerciseDataInfo.getDescription());
             fitnessLogDao.insert(exercise);
@@ -185,12 +188,50 @@ public class ExerciseActivity extends AppCompatActivity {
             EditText repetitions = view.findViewById(R.id.et_repetitions);
             EditText weight = view.findViewById(R.id.et_weight);
 
+            EditText etWorkoutName = view.findViewById(R.id.et_workout_name);
+            EditText etWorkoutDescription = view.findViewById(R.id.et_workout_description);
+
             int reps = Integer.parseInt(repetitions.getText().toString());
             int inputWeight = Integer.parseInt(weight.getText().toString());
 
-            FitnessLog fitnessLog = new FitnessLog(exercise.getExerciseName(), inputWeight, reps, mUserId);
-            fitnessLogDao.insert(fitnessLog);
+            String workoutName = etWorkoutName.getText().toString();
+            String workoutDescription = etWorkoutDescription.getText().toString();
+
+            sendWorkoutData(exercise.getExerciseName(), inputWeight, reps, workoutName, workoutDescription);
         }
+    }
+
+    private void sendWorkoutData(String exerciseName, int inputWeight, int reps, String workoutName, String workoutDescription) {
+
+        FitnessAPI fitnessAPI = ExternalProcess.getFitnessAPIInstance();
+
+        WorkoutDataInfo workoutDataInfo = new WorkoutDataInfo(workoutName, workoutDescription);
+
+        Call<WorkoutDataInfo> workoutInfo = fitnessAPI.sendWorkoutInfo(workoutDataInfo);
+
+        workoutInfo.enqueue(new Callback<WorkoutDataInfo>() {
+            @Override
+            public void onResponse(Call<WorkoutDataInfo> call, Response<WorkoutDataInfo> response) {
+                if (!response.isSuccessful()) {
+                    return;
+                }
+
+                WorkoutDataInfo dataInfo = response.body();
+
+                if(dataInfo != null) {
+
+                    FitnessLog fitnessLog = new FitnessLog(exerciseName, inputWeight, reps, mUserId,
+                            dataInfo.getId(), workoutName, workoutDescription);
+
+                    fitnessLogDao.insert(fitnessLog);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WorkoutDataInfo> call, Throwable t) {
+
+            }
+        });
     }
 
     private void checkForUser() {

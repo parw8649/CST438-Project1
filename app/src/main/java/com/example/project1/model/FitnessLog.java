@@ -16,17 +16,21 @@ public class FitnessLog {
     private String mExercise;
     private double mWeight;
     private int mReps;
-
-    private Date mDate;
+    private Long workoutId;
+    private String workoutName;
+    private String workoutDescription;
+    private Date mDate = new Date();
 
     private int mUserId;
 
-    public FitnessLog(String mExercise, double weight, int reps, int mUserId) {
+    public FitnessLog(String mExercise, double weight, int reps, int mUserId, Long workoutId, String workoutName, String workoutDescription) {
         this.mExercise = mExercise;
         this.mWeight = weight;
         this.mReps = reps;
-        this.mDate = new Date();
         this.mUserId = mUserId;
+        this.workoutId = workoutId;
+        this.workoutName = workoutName;
+        this.workoutDescription = workoutDescription;
     }
 
     public int getLogId() {
@@ -77,12 +81,39 @@ public class FitnessLog {
         this.mUserId = mUserId;
     }
 
+    public Long getWorkoutId() {
+        return workoutId;
+    }
+
+    public void setWorkoutId(Long workoutId) {
+        this.workoutId = workoutId;
+    }
+
+    public String getWorkoutName() {
+        return workoutName;
+    }
+
+    public void setWorkoutName(String workoutName) {
+        this.workoutName = workoutName;
+    }
+
+    public String getWorkoutDescription() {
+        return workoutDescription;
+    }
+
+    public void setWorkoutDescription(String workoutDescription) {
+        this.workoutDescription = workoutDescription;
+    }
+
     @Override
     public String toString() {
 
         String output = mExercise + " " + mWeight + " : " + mReps;
         output += "\n" + getDate();
         output += "\nUserId =" + mUserId;
+        output += "\nWorkoutId: " + workoutId;
+        output += "\nWorkout name: " + workoutName;
+        output += "\nWorkout description: " + workoutDescription;
 
         return output;
     }
