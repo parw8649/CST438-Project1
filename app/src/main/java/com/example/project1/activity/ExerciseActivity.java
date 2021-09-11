@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project1.R;
@@ -93,7 +94,7 @@ public class ExerciseActivity extends AppCompatActivity {
 
         exerciseInfo.enqueue(new Callback<FitnessData<ExerciseDataInfo>>() {
             @Override
-            public void onResponse(Call<FitnessData<ExerciseDataInfo>> call, Response<FitnessData<ExerciseDataInfo>> response) {
+            public void onResponse(@NonNull Call<FitnessData<ExerciseDataInfo>> call, Response<FitnessData<ExerciseDataInfo>> response) {
                 if (!response.isSuccessful()) {
                     return;
                 }
@@ -228,7 +229,7 @@ public class ExerciseActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<WorkoutDataInfo> call, Throwable t) {
+            public void onFailure(Call<WorkoutDataInfo> call, @NonNull Throwable t) {
 
             }
         });
