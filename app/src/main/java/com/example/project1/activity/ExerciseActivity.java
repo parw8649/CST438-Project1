@@ -159,6 +159,14 @@ public class ExerciseActivity extends AppCompatActivity {
 
         dialog.setContentView(view);
 
+        TextView exerciseName = view.findViewById(R.id.tv_operations);
+
+        Exercise exercise = fetchSelectedExercise(position);
+
+        if(exercise !=  null) {
+            exerciseName.setText(exercise.toString());
+        }
+
         if(position != -1) {
             dialog.show();
         }
@@ -173,18 +181,20 @@ public class ExerciseActivity extends AppCompatActivity {
         });
     }
 
-    private void processExerciseData(int position, View view) {
+    private Exercise fetchSelectedExercise(int position) {
 
         String value = (String) listView.getItemAtPosition(position);
 
-        Exercise exercise = fitnessLogDao.getByExerciseName(value);
+        return fitnessLogDao.getByExerciseName(value);
+    }
+
+    private void processExerciseData(int position, View view) {
+
+        Exercise exercise = fetchSelectedExercise(position);
 
         if(exercise == null) {
             Toast.makeText(this, "Invalid Exercise fetched!", Toast.LENGTH_LONG).show();
         } else {
-
-            TextView exerciseInfo = view.findViewById(R.id.tv_operations);
-            exerciseInfo.setText(exercise.getExerciseInfo());
 
             EditText repetitions = view.findViewById(R.id.et_repetitions);
             EditText weight = view.findViewById(R.id.et_weight);
