@@ -2,6 +2,7 @@ package com.example.project1.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,9 +47,12 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(v -> {
             getValuesFromDisplay();
             if(checkForUserInDatabase()) {
+                mUsernameField.setBackgroundColor(Color.parseColor("#FFB100"));
                 if(!validatePassword()) {
+                    mPasswordField.setBackgroundColor(Color.RED);
                     Toast.makeText(this, "Invalid Password", Toast.LENGTH_SHORT).show();
                 } else {
+                    mPasswordField.setBackgroundColor(Color.parseColor("#FFB100"));
                     Intent intent = MainActivity.intentFactory(getApplicationContext(), mUser.getUserId());
                     startActivity(intent);
                 }
@@ -71,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mUser = fitnessLogDao.getUserByUsername(mUsername);
         if(mUser == null) {
+            mUsernameField.setBackgroundColor(Color.RED);
             Toast.makeText(this, "no user " + mUsername + " found", Toast.LENGTH_SHORT).show();
             return false;
         }
