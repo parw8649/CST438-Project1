@@ -23,5 +23,9 @@
     <string name="tv_new_user">New user?</string>
     <string name="et_hint_workout_name">Workout name</string>
     <string name="et_hint_workout_description">Workout description</string>
+    <string name="tv_welcome_msg">Welcome</string>
+    <string name="activity_goals">Activity Goals</string>
+    <string name="heart_rate">Heart rate</string>
+    <string name="exercise">exercise</string>
 
 </resources>

@@ -5,21 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
-import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.project1.model.FitnessLog;
 import com.example.project1.R;
 import com.example.project1.model.User;
 import com.example.project1.db.AppDatabase;
@@ -31,12 +25,9 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String USER_ID_KEY = "com.example.project1.userIdKey";
     private static final String PREFS = "com.example.project1.prefs";
-    private ListView mMainDisplay;
-    private List<FitnessLog> fitnessLogs;
-    private Button mDeleteButton;
-    private TextView displayMsg;
 
-    private ArrayAdapter<FitnessLog> adapter;
+    private TextView welcomeMsg;
+    private Button btnExercise, btnHeartRate, btnActivityGoals;
 
     private FitnessLogDao fitnessLogDao;
 
@@ -55,12 +46,13 @@ public class MainActivity extends AppCompatActivity {
         checkForUser();
         addUserToPreferences(mUserId);
         loginUser(mUserId);
-
-        refreshDisplay();
     }
 
     private void loginUser(int mUserId) {
         mUser = fitnessLogDao.getUserByUserId(mUserId);
+
+        String welcomeText = getString(R.string.tv_welcome_msg) + " " + mUser.getUsername();
+        welcomeMsg.setText(welcomeText);
         invalidateOptionsMenu();
     }
 
@@ -121,33 +113,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void wireUpDisplay() {
 
-        displayMsg = findViewById(R.id.fitnessMsgDisplay);
-        mMainDisplay = findViewById(R.id.mainGymLogDisplay);
+        welcomeMsg = findViewById(R.id.tv_welcome_msg);
 
-        View.OnClickListener listenerDel = v -> {
-            /** Getting the checked items from the listview */
-            SparseBooleanArray checkedItemPositions = mMainDisplay.getCheckedItemPositions();
-            int itemCount = mMainDisplay.getCount();
+        btnExercise = findViewById(R.id.btn_display_exercise);
+        btnHeartRate = findViewById(R.id.btn_display_heart_rate);
+        btnActivityGoals = findViewById(R.id.btn_display_activity_goals);
 
-            for (int i = itemCount - 1; i >= 0; i--) {
-                if (checkedItemPositions.get(i)) {
-                    FitnessLog fitnessLog = fitnessLogs.get(i);
-                    adapter.remove(fitnessLog);
-                    fitnessLogDao.delete(fitnessLog);
-                }
-            }
+        /*btnExercise.setOnClickListener(v -> {
+            Intent intent = ExerciseActivity.intentFactory(this, mUserId);
+            startActivity(intent);
+        });*/
 
-            checkedItemPositions.clear();
-            adapter.notifyDataSetChanged();
-            refreshDisplay();
-        };
+        //TODO: Update Action on click event for heartRate flow
+        btnHeartRate.setOnClickListener(v -> {
+            Intent intent = ExerciseActivity.intentFactory(this, mUserId);
+            startActivity(intent);
+        });
 
-        Button mSubmitButton = findViewById(R.id.mainSubmitButton);
-        mDeleteButton = findViewById(R.id.deleteButton);
-
-        mDeleteButton.setOnClickListener(listenerDel);
-
-        mSubmitButton.setOnClickListener(v -> {
+        //TODO: Update Action on click event for activityGoals flow
+        btnActivityGoals.setOnClickListener(v -> {
             Intent intent = ExerciseActivity.intentFactory(this, mUserId);
             startActivity(intent);
         });
@@ -155,28 +139,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void getDatabase() {
         fitnessLogDao = AppDatabase.getDatabaseInstance(this).getFitnessLogDao();
-    }
-
-    private void refreshDisplay() {
-
-        fitnessLogs = fitnessLogDao.getFitnessLogsByUserId(mUserId);
-
-        if(fitnessLogs.isEmpty()) {
-            mMainDisplay.setVisibility(View.INVISIBLE);
-            displayMsg.setVisibility(View.VISIBLE);
-            mDeleteButton.setVisibility(View.INVISIBLE);
-
-            displayMsg.setText(R.string.noLogsMessage);
-
-        } else {
-            mMainDisplay.setVisibility(View.VISIBLE);
-            displayMsg.setVisibility(View.INVISIBLE);
-            mDeleteButton.setVisibility(View.VISIBLE);
-        }
-
-        // Adding items to listview
-        adapter = new ArrayAdapter<>(this, R.layout.display_list_view, R.id.workout_name, fitnessLogs);
-        mMainDisplay.setAdapter(adapter);
     }
 
     public static Intent intentFactory(Context context, int mUserId) {
