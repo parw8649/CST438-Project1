@@ -1,22 +1,24 @@
 package com.example.project1.activity;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.project1.model.Exercise;
 import com.example.project1.model.FitnessLog;
 import com.example.project1.R;
 import com.example.project1.model.User;
@@ -29,10 +31,12 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String USER_ID_KEY = "com.example.project1.userIdKey";
     private static final String PREFS = "com.example.project1.prefs";
-    private TextView mMainDisplay;
+    private ListView mMainDisplay;
+    private List<FitnessLog> fitnessLogs;
     private Button mDeleteButton;
-    List<FitnessLog> mGymLogs;
-    private Dialog dialog;
+    private TextView displayMsg;
+
+    private ArrayAdapter<FitnessLog> adapter;
 
     private FitnessLogDao fitnessLogDao;
 
@@ -111,36 +115,42 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void deleteFitnessLog(FitnessLog log) {
-        fitnessLogDao.delete(log);
-    }
-
     private void getPrefs() {
         mPreferences = this.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
     }
 
     private void wireUpDisplay() {
 
+        displayMsg = findViewById(R.id.fitnessMsgDisplay);
         mMainDisplay = findViewById(R.id.mainGymLogDisplay);
 
-        mMainDisplay.setMovementMethod(new ScrollingMovementMethod());
+        View.OnClickListener listenerDel = v -> {
+            /** Getting the checked items from the listview */
+            SparseBooleanArray checkedItemPositions = mMainDisplay.getCheckedItemPositions();
+            int itemCount = mMainDisplay.getCount();
+
+            for (int i = itemCount - 1; i >= 0; i--) {
+                if (checkedItemPositions.get(i)) {
+                    FitnessLog fitnessLog = fitnessLogs.get(i);
+                    adapter.remove(fitnessLog);
+                    fitnessLogDao.delete(fitnessLog);
+                }
+            }
+
+            checkedItemPositions.clear();
+            adapter.notifyDataSetChanged();
+            refreshDisplay();
+        };
 
         Button mSubmitButton = findViewById(R.id.mainSubmitButton);
         mDeleteButton = findViewById(R.id.deleteButton);
 
-        mDeleteButton.setOnClickListener(v -> {
-//            dialog = new Dialog(this);
-//            dialog.setContentView(v);
-//            dialog.show();
-            deleteFitnessLog(mGymLogs.get(0));
-            refreshDisplay();
-        });
+        mDeleteButton.setOnClickListener(listenerDel);
+
         mSubmitButton.setOnClickListener(v -> {
             Intent intent = ExerciseActivity.intentFactory(this, mUserId);
             startActivity(intent);
         });
-
-
     }
 
     private void getDatabase() {
@@ -148,18 +158,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void refreshDisplay() {
-         mGymLogs = fitnessLogDao.getFitnessLogsByUserId(mUserId);
 
-        if(mGymLogs.size() == 0) {
-            mMainDisplay.setText(R.string.noLogsMessage);
+        fitnessLogs = fitnessLogDao.getFitnessLogsByUserId(mUserId);
+
+        if(fitnessLogs.isEmpty()) {
+            mMainDisplay.setVisibility(View.INVISIBLE);
+            displayMsg.setVisibility(View.VISIBLE);
+            mDeleteButton.setVisibility(View.INVISIBLE);
+
+            displayMsg.setText(R.string.noLogsMessage);
+
         } else {
-            StringBuilder sb = new StringBuilder();
-            for (FitnessLog log : mGymLogs) {
-                sb.append(log);
-                sb.append("\n=========================\n");
-            }
-            mMainDisplay.setText(sb.toString());
+            mMainDisplay.setVisibility(View.VISIBLE);
+            displayMsg.setVisibility(View.INVISIBLE);
+            mDeleteButton.setVisibility(View.VISIBLE);
         }
+
+        // Adding items to listview
+        adapter = new ArrayAdapter<>(this, R.layout.display_list_view, R.id.workout_name, fitnessLogs);
+        mMainDisplay.setAdapter(adapter);
     }
 
     public static Intent intentFactory(Context context, int mUserId) {
