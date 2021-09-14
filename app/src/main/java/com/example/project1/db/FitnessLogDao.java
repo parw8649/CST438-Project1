@@ -70,4 +70,5 @@ public interface FitnessLogDao {
 
     @Query("SELECT * FROM " + AppDatabase.EXERCISE_TABLE + " WHERE exerciseName = :exerciseName")
     Exercise getByExerciseName(String exerciseName);
+
 }

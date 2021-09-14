@@ -271,8 +271,6 @@ public class ExerciseActivity extends AppCompatActivity {
 
     private void refreshDisplay() {
 
-        System.out.println("Inside Refresh Display");
-
         if(exerciseList.isEmpty()) {
             exerciseList = fitnessLogDao.getAllExerciseList();
         }
@@ -286,6 +284,5 @@ public class ExerciseActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.operational_list_view, R.id.operational_exercise_name, exercises);
         listView.setAdapter(adapter);
 
-        System.out.println("Exited Refresh Display");
     }
 }
