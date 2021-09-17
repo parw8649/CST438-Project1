@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
     private void loginUser(int mUserId) {
         mUser = fitnessLogDao.getUserByUserId(mUserId);
 
-        String welcomeText = getString(R.string.tv_welcome_msg) + " " + mUser.getUsername();
-        welcomeMsg.setText(welcomeText);
+        //String welcomeText = getString(R.string.tv_welcome_msg) + " " + mUser.getUsername();
+       // welcomeMsg.setText(welcomeText);
         invalidateOptionsMenu();
     }
 
