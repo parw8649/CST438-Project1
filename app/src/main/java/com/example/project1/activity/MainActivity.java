@@ -132,18 +132,20 @@ public class MainActivity extends AppCompatActivity {
         btnHeartRate = findViewById(R.id.btn_display_heart_rate);
         btnActivityGoals = findViewById(R.id.btn_display_activity_goals);
 
-        btnExercise.setOnClickListener(v -> {
-            Intent intent = DisplayExerciseActivity.intentFactory(this, mUserId);
+        /*btnExercise.setOnClickListener(v -> {
+            Intent intent = ExerciseActivity.intentFactory(this, mUserId);
             startActivity(intent);
-        });
+        });*/
 
+        //TODO: Update Action on click event for heartRate flow
         btnHeartRate.setOnClickListener(v -> {
-            Intent intent = HeartRateActivity.intentFactory(this, mUserId);
+            Intent intent = ExerciseActivity.intentFactory(this, mUserId);
             startActivity(intent);
         });
 
+        //TODO: Update Action on click event for activityGoals flow
         btnActivityGoals.setOnClickListener(v -> {
-            Intent intent = GoalsActivity.intentFactory(this, mUserId);
+            Intent intent = ExerciseActivity.intentFactory(this, mUserId);
             startActivity(intent);
         });
     }
