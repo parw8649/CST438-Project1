@@ -13,6 +13,8 @@ public class GoalsActivity extends AppCompatActivity {
     private static final String USER_ID_KEY = "com.example.project1.userIdKey";
     private static final String PREFS = "com.example.project1.prefs";
 
+    //good
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
