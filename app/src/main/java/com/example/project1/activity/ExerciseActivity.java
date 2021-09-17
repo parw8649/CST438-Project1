@@ -3,7 +3,6 @@ package com.example.project1.activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +19,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.project1.R;
 import com.example.project1.db.AppDatabase;
 import com.example.project1.db.FitnessLogDao;
-import com.example.project1.external.FitnessData;
 import com.example.project1.external.ExerciseDataInfo;
 import com.example.project1.external.ExternalProcess;
 import com.example.project1.external.FitnessAPI;
+import com.example.project1.external.FitnessData;
 import com.example.project1.external.WorkoutDataInfo;
 import com.example.project1.model.Exercise;
 import com.example.project1.model.FitnessLog;
@@ -38,11 +37,8 @@ import retrofit2.Response;
 public class ExerciseActivity extends AppCompatActivity {
 
     private static final String USER_ID_KEY = "com.example.project1.userIdKey";
-    private static final String PREFS = "com.example.project1.prefs";
 
     private int mUserId = -1;
-
-    private SharedPreferences mPreferences = null;
 
     private ListView listView;
     private Dialog dialog;
@@ -135,7 +131,7 @@ public class ExerciseActivity extends AppCompatActivity {
         Button backButton = findViewById(R.id.btn_exercise_list_back);
 
         backButton.setOnClickListener(v -> {
-            Intent intent = MainActivity.intentFactory(this, mUserId);
+            Intent intent = DisplayExerciseActivity.intentFactory(this, mUserId);
             startActivity(intent);
         });
 
@@ -153,13 +149,13 @@ public class ExerciseActivity extends AppCompatActivity {
 
     private void displayDialog(int position) {
 
-        dialog =new Dialog(this);
+        dialog = new Dialog(this);
 
         View view = LayoutInflater.from(this).inflate(R.layout.operations, null);
 
         dialog.setContentView(view);
 
-        TextView exerciseName = view.findViewById(R.id.tv_operations);
+        TextView exerciseName = view.findViewById(R.id.tv_exercise_name);
 
         Exercise exercise = fetchSelectedExercise(position);
 
@@ -171,7 +167,7 @@ public class ExerciseActivity extends AppCompatActivity {
             dialog.show();
         }
 
-        Button addExerciseButton = view.findViewById(R.id.btn_save_data);
+        Button addExerciseButton = view.findViewById(R.id.btn_save_exercise);
 
         addExerciseButton.setEnabled(position != -1);
 
@@ -196,7 +192,7 @@ public class ExerciseActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid Exercise fetched!", Toast.LENGTH_LONG).show();
         } else {
 
-            EditText repetitions = view.findViewById(R.id.et_repetitions);
+            EditText repetitions = view.findViewById(R.id.et_reps);
             EditText weight = view.findViewById(R.id.et_weight);
 
             EditText etWorkoutName = view.findViewById(R.id.et_workout_name);
@@ -243,30 +239,6 @@ public class ExerciseActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    private void checkForUser() {
-        mUserId = getIntent().getIntExtra(USER_ID_KEY, -1);
-
-        if(mUserId != -1) {
-            return;
-        }
-
-        if(mPreferences == null) {
-            getPrefs();
-        }
-        mUserId = mPreferences.getInt(USER_ID_KEY, -1);
-
-        if(mUserId != -1) {
-            return;
-        }
-
-        Intent intent = LoginActivity.intentFactory(this);
-        startActivity(intent);
-    }
-
-    private void getPrefs() {
-        mPreferences = this.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
     }
 
     private void refreshDisplay() {

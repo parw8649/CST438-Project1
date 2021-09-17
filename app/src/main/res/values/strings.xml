@@ -27,5 +27,10 @@
     <string name="activity_goals">Activity Goals</string>
     <string name="heart_rate">Heart rate</string>
     <string name="exercise">exercise</string>
-
+    <string name="et_hint_wrist_data">Wrist Monitor</string>
+    <string name="et_hint_chest_strap_data">Chest Strap Monitor</string>
+    <string name="tv_heart_rate">Heart Rate</string>
+    <string name="tv_activity_goals">Activity Goals</string>
+    <string name="et_hint_your_activity_goal">Your Activity Goal?</string>
+    <string name="noHeartRateLogs">No records, time to check heart rate</string>
 </resources>

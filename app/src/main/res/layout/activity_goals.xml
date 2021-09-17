@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.GoalsActivity">
+
+    <Button
+        android:id="@+id/btn_activity_goals_main_back"
+        android:layout_width="71dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/button_text_back"
+        android:textSize="12sp"
+        app:backgroundTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/goalsMsgDisplay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/goalsMsgDisplay"
+        android:layout_width="385dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:fadeScrollbars="true"
+        android:gravity="center"
+        android:scrollbars="vertical"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.092"
+        tools:visibility="visible" />
+
+    <ListView
+        android:id="@+id/goalsLogDisplay"
+        android:layout_width="409dp"
+        android:layout_height="415dp"
+        android:choiceMode="multipleChoice"
+        android:outlineAmbientShadowColor="@color/black"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.356"
+        tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/addNewGoalLog"
+        android:layout_width="245dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/black"
+        android:text="@string/mainAddNewExercise"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/goalsLogDisplay"
+        app:layout_constraintVertical_bias="0.224" />
+
+    <Button
+        android:id="@+id/deleteGoalsButton"
+        android:layout_width="248dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/black"
+        android:text="Delete"
+        android:visibility="invisible"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addNewGoalLog"
+        app:layout_constraintVertical_bias="0.035"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
