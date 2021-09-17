@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import com.example.project1.R;
+import com.example.project1.Utility.Utils;
 import com.example.project1.model.User;
 import com.example.project1.db.AppDatabase;
 import com.example.project1.db.FitnessLogDao;
@@ -79,12 +80,12 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "no user " + mUsername + " found", Toast.LENGTH_SHORT).show();
             return false;
         }
-        return true;
+        return Utils.verifyUsername(mUsername, mUser.getUsername());
     }
 
     private boolean validatePassword() {
 
-        return mUser.getPassword().equals(mPassword);
+        return Utils.verifyPassword(mUser.getPassword(), mPassword);
     }
 
     private void getDatabase() {

@@ -8,6 +8,7 @@ import androidx.room.Update;
 
 import com.example.project1.model.Exercise;
 import com.example.project1.model.FitnessLog;
+import com.example.project1.model.HeartRateLog;
 import com.example.project1.model.User;
 
 import java.util.List;
@@ -71,4 +72,15 @@ public interface FitnessLogDao {
     @Query("SELECT * FROM " + AppDatabase.EXERCISE_TABLE + " WHERE exerciseName = :exerciseName")
     Exercise getByExerciseName(String exerciseName);
 
+    @Insert
+    void insert(HeartRateLog... heartRateLogs);
+
+    @Update
+    void update(HeartRateLog... heartRateLogs);
+
+    @Delete
+    void delete(HeartRateLog heartRateLog);
+
+    @Query("SELECT * FROM " + AppDatabase.HEART_RATE_LOG_TABLE + " WHERE userId = :userId")
+    List<HeartRateLog> getHeartRateLogsByUserId(int userId);
 }
