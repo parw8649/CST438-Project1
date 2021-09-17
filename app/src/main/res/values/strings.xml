@@ -27,5 +27,9 @@
     <string name="activity_goals">Activity Goals</string>
     <string name="heart_rate">Heart rate</string>
     <string name="exercise">exercise</string>
+    <string name="icon_title">Icon title</string>
+    <string name="log_out">Log Out</string>
+    <string name="goals">Goals</string>
+    <string name="welcome">Welcome</string>
 
 </resources>

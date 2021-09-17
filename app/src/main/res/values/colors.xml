@@ -12,4 +12,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="ic_bg_yellow">#FFD505</color>
     <color name="ic_fg_blue">#1E68FF</color>
+
+    <color name="my_blue">#4991f5</color>
 </resources>

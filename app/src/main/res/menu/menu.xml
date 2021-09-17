@@ -2,8 +2,17 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item android:id="@+id/user_name"
+        android:title="@string/et_hint_username"
+        app:showAsAction="ifRoom"
+        />
     <item
         android:id="@+id/userMenuLogout"
-        android:title="@string/et_hint_username"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/log_out"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/goals"
+        android:title="@string/goals"
+        app:showAsAction="never"/>
 </menu>
