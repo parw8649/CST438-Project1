@@ -9,10 +9,11 @@ import androidx.room.TypeConverters;
 
 import com.example.project1.model.Exercise;
 import com.example.project1.model.FitnessLog;
+import com.example.project1.model.HeartRateLog;
 import com.example.project1.model.User;
 import com.example.project1.db.typeConverters.DateTypeConverter;
 
-@Database(entities = {FitnessLog.class, User.class, Exercise.class}, version = 4)
+@Database(entities = {FitnessLog.class, User.class, Exercise.class, HeartRateLog.class}, version = 5)
 @TypeConverters(DateTypeConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -20,6 +21,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public static final String FITNESS_LOG_TABLE = "FITNESS_LOG_TABLE";
     public static final String USER_TABLE = "USER_TABLE";
     public static final String EXERCISE_TABLE = "EXERCISE_TABLE";
+    public static final String HEART_RATE_LOG_TABLE = "HEART_RATE_LOG_TABLE";
 
     private static AppDatabase fitnessDatabase;
 

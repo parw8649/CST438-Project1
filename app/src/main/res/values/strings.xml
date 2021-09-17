@@ -27,9 +27,10 @@
     <string name="activity_goals">Activity Goals</string>
     <string name="heart_rate">Heart rate</string>
     <string name="exercise">exercise</string>
-    <string name="icon_title">Icon title</string>
-    <string name="log_out">Log Out</string>
-    <string name="goals">Goals</string>
-    <string name="welcome">Welcome</string>
-
+    <string name="et_hint_wrist_data">Wrist Monitor</string>
+    <string name="et_hint_chest_strap_data">Chest Strap Monitor</string>
+    <string name="tv_heart_rate">Heart Rate</string>
+    <string name="tv_activity_goals">Activity Goals</string>
+    <string name="et_hint_your_activity_goal">Your Activity Goal?</string>
+    <string name="noHeartRateLogs">No records, time to check heart rate</string>
 </resources>
