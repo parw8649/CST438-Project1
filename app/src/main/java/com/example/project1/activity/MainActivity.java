@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.ViewStructure;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         checkForUser();
         addUserToPreferences(mUserId);
         loginUser(mUserId);
+
     }
 
     private void loginUser(int mUserId) {
@@ -58,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         return true;
@@ -66,15 +68,26 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        logoutUser();
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()){
+            case R.id.user_name:
+                Toast.makeText(this, "Not here, please click next item.", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.userMenuLogout:
+                logoutUser();
+                return true;
+            case R.id.goals:
+                Toast.makeText(this, "goals", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         if(mUser != null) {
-            MenuItem item = menu.findItem(R.id.userMenuLogout);
-            item.setTitle(mUser.getUsername());
+            MenuItem item = menu.findItem(R.id.user_name);
+            item.setTitle("Welcome " + mUser.getUsername());
         }
 
         return super.onPrepareOptionsMenu(menu);
