@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
     private void getPrefs() {
         mPreferences = this.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
     }
+    
 
     private void wireUpDisplay() {
 
