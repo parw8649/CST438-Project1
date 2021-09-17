@@ -37,11 +37,8 @@ import retrofit2.Response;
 public class ExerciseActivity extends AppCompatActivity {
 
     private static final String USER_ID_KEY = "com.example.project1.userIdKey";
-    private static final String PREFS = "com.example.project1.prefs";
 
     private int mUserId = -1;
-
-    private SharedPreferences mPreferences = null;
 
     private ListView listView;
     private Dialog dialog;
@@ -134,7 +131,7 @@ public class ExerciseActivity extends AppCompatActivity {
         Button backButton = findViewById(R.id.btn_exercise_list_back);
 
         backButton.setOnClickListener(v -> {
-            Intent intent = MainActivity.intentFactory(this, mUserId);
+            Intent intent = DisplayExerciseActivity.intentFactory(this, mUserId);
             startActivity(intent);
         });
 
@@ -152,17 +149,25 @@ public class ExerciseActivity extends AppCompatActivity {
 
     private void displayDialog(int position) {
 
-        dialog =new Dialog(this);
+        dialog = new Dialog(this);
 
         View view = LayoutInflater.from(this).inflate(R.layout.operations, null);
 
         dialog.setContentView(view);
 
+        TextView exerciseName = view.findViewById(R.id.tv_exercise_name);
+
+        Exercise exercise = fetchSelectedExercise(position);
+
+        if(exercise !=  null) {
+            exerciseName.setText(exercise.toString());
+        }
+
         if(position != -1) {
             dialog.show();
         }
 
-        Button addExerciseButton = view.findViewById(R.id.btn_save_data);
+        Button addExerciseButton = view.findViewById(R.id.btn_save_exercise);
 
         addExerciseButton.setEnabled(position != -1);
 
@@ -172,20 +177,22 @@ public class ExerciseActivity extends AppCompatActivity {
         });
     }
 
-    private void processExerciseData(int position, View view) {
+    private Exercise fetchSelectedExercise(int position) {
 
         String value = (String) listView.getItemAtPosition(position);
 
-        Exercise exercise = fitnessLogDao.getByExerciseName(value);
+        return fitnessLogDao.getByExerciseName(value);
+    }
+
+    private void processExerciseData(int position, View view) {
+
+        Exercise exercise = fetchSelectedExercise(position);
 
         if(exercise == null) {
             Toast.makeText(this, "Invalid Exercise fetched!", Toast.LENGTH_LONG).show();
         } else {
 
-            TextView exerciseInfo = view.findViewById(R.id.tv_operations);
-            exerciseInfo.setText(exercise.getExerciseInfo());
-
-            EditText repetitions = view.findViewById(R.id.et_repetitions);
+            EditText repetitions = view.findViewById(R.id.et_reps);
             EditText weight = view.findViewById(R.id.et_weight);
 
             EditText etWorkoutName = view.findViewById(R.id.et_workout_name);
@@ -232,30 +239,6 @@ public class ExerciseActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    private void checkForUser() {
-        mUserId = getIntent().getIntExtra(USER_ID_KEY, -1);
-
-        if(mUserId != -1) {
-            return;
-        }
-
-        if(mPreferences == null) {
-            getPrefs();
-        }
-        mUserId = mPreferences.getInt(USER_ID_KEY, -1);
-
-        if(mUserId != -1) {
-            return;
-        }
-
-        Intent intent = LoginActivity.intentFactory(this);
-        startActivity(intent);
-    }
-
-    private void getPrefs() {
-        mPreferences = this.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
     }
 
     private void refreshDisplay() {

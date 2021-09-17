@@ -124,15 +124,13 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        //TODO: Update Action on click event for heartRate flow
         btnHeartRate.setOnClickListener(v -> {
-            Intent intent = ExerciseActivity.intentFactory(this, mUserId);
+            Intent intent = HeartRateActivity.intentFactory(this, mUserId);
             startActivity(intent);
         });
 
-        //TODO: Update Action on click event for activityGoals flow
         btnActivityGoals.setOnClickListener(v -> {
-            Intent intent = ExerciseActivity.intentFactory(this, mUserId);
+            Intent intent = GoalsActivity.intentFactory(this, mUserId);
             startActivity(intent);
         });
     }

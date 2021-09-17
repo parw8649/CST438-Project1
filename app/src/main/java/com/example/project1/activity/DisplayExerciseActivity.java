@@ -113,8 +113,8 @@ public class DisplayExerciseActivity extends AppCompatActivity {
 
     private void wireUpDisplay() {
 
-        displayMsg = findViewById(R.id.goalsMsgDisplay);
-        mMainDisplay = findViewById(R.id.goalsLogDisplay);
+        displayMsg = findViewById(R.id.exerciseMsgDisplay);
+        mMainDisplay = findViewById(R.id.lv_exercise_display);
 
         Button backButton = findViewById(R.id.btn_exercise_main_back);
 
@@ -141,8 +141,8 @@ public class DisplayExerciseActivity extends AppCompatActivity {
             refreshDisplay();
         };
 
-        Button mSubmitButton = findViewById(R.id.addNewGoalLog);
-        mDeleteButton = findViewById(R.id.deleteGoalsButton);
+        Button mSubmitButton = findViewById(R.id.addNewExerciseLog);
+        mDeleteButton = findViewById(R.id.deleteExerciseButton);
 
         mDeleteButton.setOnClickListener(listenerDel);
 

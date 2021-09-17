@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tv_operations"
+        android:id="@+id/tv_exercise_name"
         android:layout_width="315dp"
         android:layout_height="58dp"
         android:gravity="center"
@@ -20,7 +20,7 @@
         app:layout_constraintVertical_bias="0.135" />
 
     <EditText
-        android:id="@+id/et_repetitions"
+        android:id="@+id/et_reps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -29,7 +29,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_operations"
+        app:layout_constraintTop_toBottomOf="@+id/tv_exercise_name"
         app:layout_constraintVertical_bias="0.08" />
 
     <EditText
@@ -42,7 +42,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_repetitions"
+        app:layout_constraintTop_toBottomOf="@+id/et_reps"
         app:layout_constraintVertical_bias="0.073" />
 
     <EditText
@@ -72,7 +72,7 @@
         app:layout_constraintVertical_bias="0.073" />
 
     <Button
-        android:id="@+id/btn_save_data"
+        android:id="@+id/btn_save_exercise"
         android:layout_width="209dp"
         android:layout_height="50dp"
         android:layout_marginBottom="22dp"
