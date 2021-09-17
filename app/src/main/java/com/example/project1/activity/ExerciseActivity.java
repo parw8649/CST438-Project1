@@ -3,7 +3,6 @@ package com.example.project1.activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,15 +13,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project1.R;
 import com.example.project1.db.AppDatabase;
 import com.example.project1.db.FitnessLogDao;
-import com.example.project1.external.FitnessData;
 import com.example.project1.external.ExerciseDataInfo;
 import com.example.project1.external.ExternalProcess;
 import com.example.project1.external.FitnessAPI;
+import com.example.project1.external.FitnessData;
 import com.example.project1.external.WorkoutDataInfo;
 import com.example.project1.model.Exercise;
 import com.example.project1.model.FitnessLog;
@@ -90,7 +90,7 @@ public class ExerciseActivity extends AppCompatActivity {
 
         exerciseInfo.enqueue(new Callback<FitnessData<ExerciseDataInfo>>() {
             @Override
-            public void onResponse(Call<FitnessData<ExerciseDataInfo>> call, Response<FitnessData<ExerciseDataInfo>> response) {
+            public void onResponse(@NonNull Call<FitnessData<ExerciseDataInfo>> call, Response<FitnessData<ExerciseDataInfo>> response) {
                 if (!response.isSuccessful()) {
                     return;
                 }
@@ -235,7 +235,7 @@ public class ExerciseActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<WorkoutDataInfo> call, Throwable t) {
+            public void onFailure(Call<WorkoutDataInfo> call, @NonNull Throwable t) {
 
             }
         });
