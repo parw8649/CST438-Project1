@@ -12,10 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Fitness">
         <activity
-            android:name=".activity.HeartRateActivity"
+            android:name=".activity.GoalsActivity"
             android:exported="true" />
         <activity
-            android:name=".activity.GoalsActivity"
+            android:name=".activity.HeartRateActivity"
             android:exported="true" />
         <activity
             android:name=".activity.DisplayExerciseActivity"

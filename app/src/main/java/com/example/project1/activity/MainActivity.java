@@ -75,9 +75,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.userMenuLogout:
                 logoutUser();
                 return true;
-            case R.id.goals:
-                Toast.makeText(this, "goals", Toast.LENGTH_SHORT).show();
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
