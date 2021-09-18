@@ -2,8 +2,13 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/userMenuLogout"
+    <item android:id="@+id/user_name"
         android:title="@string/et_hint_username"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom"
+        />
+    <!--<item
+        android:id="@+id/userMenuLogout"
+        android:title="log_out"
+        app:showAsAction="never"/>-->
+
 </menu>

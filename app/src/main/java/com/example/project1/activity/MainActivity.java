@@ -10,14 +10,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project1.R;
-import com.example.project1.model.User;
 import com.example.project1.db.AppDatabase;
 import com.example.project1.db.FitnessLogDao;
+import com.example.project1.model.User;
 
 import java.util.List;
 
@@ -64,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         return true;
@@ -72,14 +72,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        logoutUser();
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()){
+            case R.id.user_name:
+                logoutUser();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         if(mUser != null) {
-            MenuItem item = menu.findItem(R.id.userMenuLogout);
+            MenuItem item = menu.findItem(R.id.user_name);
             item.setTitle(mUser.getUsername());
         }
 
