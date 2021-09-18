@@ -11,13 +11,19 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.example.project1.Utility.Utils;
+import com.example.project1.activity.ExerciseActivity;
 import com.example.project1.activity.MainActivity;
 import com.example.project1.db.AppDatabase;
 import com.example.project1.db.FitnessLogDao;
+import com.example.project1.external.ExternalProcess;
+import com.example.project1.model.Exercise;
 import com.example.project1.model.User;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 public class DatabaseTest {
@@ -75,5 +81,22 @@ public class DatabaseTest {
         intent.putExtra("Test1", "intentWithData2");
 
         assertEquals("intentWithData2", intent.getStringExtra("Test1"));
+    }
+
+    @Test
+    public void apiTest() {
+
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+
+        List<Exercise> statExerciseList = new ArrayList<>();
+        statExerciseList.add(new Exercise(101, "biceps curl", "bicep curls 20 sets"));
+        statExerciseList.add(new Exercise(102, "triceps curl", "triceps curls 20 sets"));
+        statExerciseList.add(new Exercise(103, "chest", "chest 25 sets"));
+        statExerciseList.add(new Exercise(104, "bench press", "bench press 30 sets"));
+        statExerciseList.add(new Exercise(105, "lateral pull", "lateral pull 35 sets"));
+
+        List<Exercise> exerciseList = Utils.getExerciseDataFromExternal();
+
+        assertEquals(statExerciseList.size(), exerciseList.size());
     }
 }

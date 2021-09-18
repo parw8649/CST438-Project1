@@ -45,7 +45,7 @@ public class ExerciseActivity extends AppCompatActivity {
 
     private FitnessLogDao fitnessLogDao;
 
-    private List<Exercise> exerciseList;
+    public List<Exercise> exerciseList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +72,7 @@ public class ExerciseActivity extends AppCompatActivity {
         return intent;
     }
 
-    private void initExerciseData() {
+    public void initExerciseData() {
 
         exerciseList = fitnessLogDao.getAllExerciseList();
         if(exerciseList.size() == 0) {
