@@ -21,8 +21,8 @@
 
     <EditText
         android:id="@+id/et_activity_goals_description"
-        android:layout_width="390dp"
-        android:layout_height="174dp"
+        android:layout_width="321dp"
+        android:layout_height="152dp"
         android:ems="10"
         android:hint="@string/et_hint_your_activity_goal"
         android:inputType="text"

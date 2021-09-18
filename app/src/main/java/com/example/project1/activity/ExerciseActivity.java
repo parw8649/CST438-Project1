@@ -53,9 +53,9 @@ public class ExerciseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_exercise);
 
         getDatabase();
+        getUserDetails();
         wireUpDisplay();
         initExerciseData();
-        getUserDetails();
     }
 
     private void getDatabase() {
@@ -255,6 +255,5 @@ public class ExerciseActivity extends AppCompatActivity {
         // Adding items to listview
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.operational_list_view, R.id.operational_exercise_name, exercises);
         listView.setAdapter(adapter);
-
     }
 }

@@ -29,7 +29,6 @@ import java.util.List;
 public class DisplayExerciseActivity extends AppCompatActivity {
 
     private static final String USER_ID_KEY = "com.example.project1.userIdKey";
-    private static final String PREFS = "com.example.project1.prefs";
     private ListView mMainDisplay;
     private List<FitnessLog> fitnessLogs;
     private Button mDeleteButton;
@@ -50,65 +49,14 @@ public class DisplayExerciseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display_exercise);
 
         getDatabase();
+        getUserDetails();
         wireUpDisplay();
-        checkForUser();
-        addUserToPreferences(mUserId);
-        loginUser(mUserId);
-
         refreshDisplay();
     }
 
-    private void loginUser(int mUserId) {
-        mUser = fitnessLogDao.getUserByUserId(mUserId);
-        invalidateOptionsMenu();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        logoutUser();
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        if(mUser != null) {
-            MenuItem item = menu.findItem(R.id.userMenuLogout);
-            item.setTitle(mUser.getUsername());
-        }
-
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    private void checkForUser() {
+    private void getUserDetails() {
         mUserId = getIntent().getIntExtra(USER_ID_KEY, -1);
-
-        if(mUserId != -1) {
-            return;
-        }
-
-        if(mPreferences == null) {
-            getPrefs();
-        }
-        mUserId = mPreferences.getInt(USER_ID_KEY, -1);
-
-        if(mUserId != -1) {
-            return;
-        }
-
-        Intent intent = LoginActivity.intentFactory(this);
-        startActivity(intent);
-    }
-
-    private void getPrefs() {
-        mPreferences = this.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+        mUser = fitnessLogDao.getUserByUserId(mUserId);
     }
 
     private void wireUpDisplay() {
@@ -182,47 +130,5 @@ public class DisplayExerciseActivity extends AppCompatActivity {
         Intent intent = new Intent(context, DisplayExerciseActivity.class);
         intent.putExtra(USER_ID_KEY, mUserId);
         return intent;
-    }
-
-    private void addUserToPreferences(int mUserId) {
-        if(mPreferences == null) {
-            getPrefs();
-        }
-        SharedPreferences.Editor editor = mPreferences.edit();
-        editor.putInt(USER_ID_KEY, mUserId);
-        editor.apply();
-    }
-
-    private void logoutUser() {
-
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-
-        alertBuilder.setMessage(R.string.logout);
-
-        alertBuilder.setPositiveButton(R.string.yes, (dialogInterface, i) -> {
-            this.clearUserFromIntent();
-            this.clearUserFromPrefs();
-            mUserId = -1;
-            this.checkForUser();
-        });
-
-        alertBuilder.setNegativeButton(R.string.no, (dialogInterface, i) -> {
-
-        });
-
-        alertBuilder.setOnCancelListener(dialog -> {
-
-        });
-
-        AlertDialog goodAlert = alertBuilder.create();
-        goodAlert.show();
-    }
-
-    private void clearUserFromPrefs() {
-        addUserToPreferences(-1);
-    }
-
-    private void clearUserFromIntent() {
-        getIntent().putExtra(USER_ID_KEY, -1);
     }
 }

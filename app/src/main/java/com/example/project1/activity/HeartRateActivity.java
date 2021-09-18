@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,8 +30,6 @@ public class HeartRateActivity extends AppCompatActivity {
     private FitnessLogDao fitnessLogDao;
     private int mUserId = -1;
 
-    private User mUser;
-
     private ListView displayHeartRate;
     private List<HeartRateLog> heartRateLogs;
     private Button mDeleteButton;
@@ -47,10 +46,8 @@ public class HeartRateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_heart_rate);
 
         getDatabase();
-        wireUpDisplay();
         getUserDetails();
-        loginUser(mUserId);
-
+        wireUpDisplay();
         refreshDisplay();
     }
 
@@ -69,10 +66,7 @@ public class HeartRateActivity extends AppCompatActivity {
 
         Button backButton = findViewById(R.id.btn_heart_rate_main_back);
 
-        backButton.setOnClickListener(v -> {
-            Intent intent = MainActivity.intentFactory(this, mUserId);
-            startActivity(intent);
-        });
+        backButton.setOnClickListener(v -> finish());
 
         View.OnClickListener listenerDel = v -> {
             /** Getting the checked items from the listview */
@@ -102,11 +96,11 @@ public class HeartRateActivity extends AppCompatActivity {
 
     private void openHeartRatePopupDialogBox() {
         dialogBuilder = new AlertDialog.Builder(this);
-        final View searchPopupView = getLayoutInflater().inflate(R.layout.add_heart_rate_popup, null);
+        final View popupView = getLayoutInflater().inflate(R.layout.add_heart_rate_popup, null);
 
-        processHeartRateData(searchPopupView);
+        processHeartRateData(popupView);
 
-        dialogBuilder.setView(searchPopupView);
+        dialogBuilder.setView(popupView);
         alertDialog = dialogBuilder.create();
         alertDialog.show();
     }
@@ -120,43 +114,42 @@ public class HeartRateActivity extends AppCompatActivity {
 
         saveHeartRate.setOnClickListener(v -> {
 
-            int wristInfo = Integer.parseInt(wristMonitoring.getText().toString());
-            int chestStrapInfo = Integer.parseInt(chestStrapMonitoring.getText().toString());
+            if(wristMonitoring != null && wristMonitoring.getText() != null
+                    && chestStrapMonitoring != null && chestStrapMonitoring.getText() != null) {
 
-            HeartRateLog heartRateLog = new HeartRateLog(wristInfo, chestStrapInfo, mUserId);
-            fitnessLogDao.insert(heartRateLog);
-            alertDialog.dismiss();
-            Intent intent = HeartRateActivity.intentFactory(this, mUserId);
-            startActivity(intent);
+                int wristInfo = Integer.parseInt(wristMonitoring.getText().toString());
+                int chestStrapInfo = Integer.parseInt(chestStrapMonitoring.getText().toString());
+
+                HeartRateLog heartRateLog = new HeartRateLog(wristInfo, chestStrapInfo, mUserId);
+                fitnessLogDao.insert(heartRateLog);
+
+                alertDialog.dismiss();
+                refreshDisplay();
+            } else {
+                Toast.makeText(this, "Invalid heart rate details", Toast.LENGTH_LONG).show();
+            }
         });
     }
-
 
     private void refreshDisplay() {
 
         heartRateLogs = fitnessLogDao.getHeartRateLogsByUserId(mUserId);
 
         if(heartRateLogs.isEmpty()) {
+            mDeleteButton.setVisibility(View.INVISIBLE);
             displayHeartRate.setVisibility(View.INVISIBLE);
             displayMsg.setVisibility(View.VISIBLE);
-            mDeleteButton.setVisibility(View.INVISIBLE);
-
             displayMsg.setText(R.string.noHeartRateLogs);
 
         } else {
+            mDeleteButton.setVisibility(View.VISIBLE);
             displayHeartRate.setVisibility(View.VISIBLE);
             displayMsg.setVisibility(View.INVISIBLE);
-            mDeleteButton.setVisibility(View.VISIBLE);
         }
 
         // Adding items to listview
         adapter = new ArrayAdapter<>(this, R.layout.display_list_view, R.id.workout_name, heartRateLogs);
         displayHeartRate.setAdapter(adapter);
-    }
-
-    private void loginUser(int mUserId) {
-        mUser = fitnessLogDao.getUserByUserId(mUserId);
-        invalidateOptionsMenu();
     }
 
     public static Intent intentFactory(Context context, int mUserId) {
