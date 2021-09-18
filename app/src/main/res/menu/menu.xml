@@ -6,9 +6,9 @@
         android:title="@string/et_hint_username"
         app:showAsAction="ifRoom"
         />
-    <item
+    <!--<item
         android:id="@+id/userMenuLogout"
         android:title="log_out"
-        app:showAsAction="never"/>
+        app:showAsAction="never"/>-->
 
 </menu>

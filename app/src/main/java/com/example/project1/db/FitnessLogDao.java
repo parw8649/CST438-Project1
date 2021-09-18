@@ -6,6 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.project1.model.ActivityGoalLog;
 import com.example.project1.model.Exercise;
 import com.example.project1.model.FitnessLog;
 import com.example.project1.model.HeartRateLog;
@@ -83,4 +84,16 @@ public interface FitnessLogDao {
 
     @Query("SELECT * FROM " + AppDatabase.HEART_RATE_LOG_TABLE + " WHERE userId = :userId")
     List<HeartRateLog> getHeartRateLogsByUserId(int userId);
+
+    @Insert
+    void insert(ActivityGoalLog... activityGoalLogs);
+
+    @Update
+    void update(ActivityGoalLog... activityGoalLogs);
+
+    @Delete
+    void delete(ActivityGoalLog activityGoalLog);
+
+    @Query("SELECT * FROM " + AppDatabase.ACTIVITY_GOAL_LOG_TABLE + " WHERE userId = :userId")
+    List<ActivityGoalLog> getActivityGoalLogsByUserId(int userId);
 }

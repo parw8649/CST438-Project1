@@ -45,7 +45,7 @@ public class ExerciseActivity extends AppCompatActivity {
 
     private FitnessLogDao fitnessLogDao;
 
-    private List<Exercise> exerciseList;
+    public List<Exercise> exerciseList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +53,9 @@ public class ExerciseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_exercise);
 
         getDatabase();
+        getUserDetails();
         wireUpDisplay();
         initExerciseData();
-        getUserDetails();
     }
 
     private void getDatabase() {
@@ -72,7 +72,7 @@ public class ExerciseActivity extends AppCompatActivity {
         return intent;
     }
 
-    private void initExerciseData() {
+    public void initExerciseData() {
 
         exerciseList = fitnessLogDao.getAllExerciseList();
         if(exerciseList.size() == 0) {
@@ -255,6 +255,5 @@ public class ExerciseActivity extends AppCompatActivity {
         // Adding items to listview
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.operational_list_view, R.id.operational_exercise_name, exercises);
         listView.setAdapter(adapter);
-
     }
 }

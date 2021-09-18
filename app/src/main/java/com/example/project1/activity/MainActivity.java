@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.ViewStructure;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,9 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project1.R;
-import com.example.project1.model.User;
 import com.example.project1.db.AppDatabase;
 import com.example.project1.db.FitnessLogDao;
+import com.example.project1.model.User;
 
 import java.util.List;
 
@@ -48,14 +47,19 @@ public class MainActivity extends AppCompatActivity {
         checkForUser();
         addUserToPreferences(mUserId);
         loginUser(mUserId);
+        setWelcomeView();
+    }
 
+    private void setWelcomeView() {
+        if(mUser == null)
+            return;
+
+        String welcomeText = getString(R.string.tv_welcome_msg) + " " + mUser.getUsername();
+        welcomeMsg.setText(welcomeText);
     }
 
     private void loginUser(int mUserId) {
         mUser = fitnessLogDao.getUserByUserId(mUserId);
-
-        //String welcomeText = getString(R.string.tv_welcome_msg) + " " + mUser.getUsername();
-       // welcomeMsg.setText(welcomeText);
         invalidateOptionsMenu();
     }
 
@@ -70,9 +74,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.user_name:
-                Toast.makeText(this, "Not here, please click next item.", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.userMenuLogout:
                 logoutUser();
                 return true;
             default:
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         if(mUser != null) {
             MenuItem item = menu.findItem(R.id.user_name);
-            item.setTitle("Welcome " + mUser.getUsername());
+            item.setTitle(mUser.getUsername());
         }
 
         return super.onPrepareOptionsMenu(menu);
@@ -171,10 +172,10 @@ public class MainActivity extends AppCompatActivity {
         alertBuilder.setMessage(R.string.logout);
 
         alertBuilder.setPositiveButton(R.string.yes, (dialogInterface, i) -> {
-            MainActivity.this.clearUserFromIntent();
-            MainActivity.this.clearUserFromPrefs();
+            clearUserFromIntent();
+            clearUserFromPrefs();
             mUserId = -1;
-            MainActivity.this.checkForUser();
+            checkForUser();
         });
 
         alertBuilder.setNegativeButton(R.string.no, (dialogInterface, i) -> {

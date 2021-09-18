@@ -33,4 +33,6 @@
     <string name="tv_activity_goals">Activity Goals</string>
     <string name="et_hint_your_activity_goal">Your Activity Goal?</string>
     <string name="noHeartRateLogs">No records, time to check heart rate</string>
+    <string name="noActivityGoalLogs">No records, time to set goals</string>
+    <string name="btn_txt_delete">Delete</string>
 </resources>
