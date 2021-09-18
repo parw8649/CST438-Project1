@@ -11,8 +11,4 @@
         android:title="log_out"
         app:showAsAction="never"/>
 
-    <item
-        android:id="@+id/goals"
-        android:title="goals"
-        app:showAsAction="never"/>
 </menu>
