@@ -10,7 +10,7 @@ A third party integration is added named wger. wger is a collaborative open sour
 
 Guide to install and use -  Android Studio Artctic Fox|2020.3.1 Patch 2
 
-Project status - In development (Updation, Deletion, Heart rate and Activity goals pending)
+Project status - Complete, all functionalities implemented
 
 Development environment for integration :- None
 
