@@ -31,6 +31,6 @@ script:
   - # do stuff with Oracle JDK 8
   - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh
   - chmod +x $TRAVIS_BUILD_DIR/install-jdk.sh
-  - export JAVA_HOME=$HOME/openjdk11
+  - export JAVA_HOME=$HOME/oraclejdk8
   - $TRAVIS_BUILD_DIR/install-jdk.sh -F 8 --target $JAVA_HOME
   - ./gradlew connectedAndroidTest
