@@ -8,7 +8,7 @@ android:
  components:
    - platform-tools
    - tools
-   - build-tools-29.0.2
+   - build-tools-30.0.2
    - android-22
    - android-29
    - android-24
@@ -25,12 +25,12 @@ before_script:
  - adb shell input keyevent 82 &
 
 
-jdk: openjdk11
+jdk: oraclejdk8
 script:
-  - jdk_switcher use openjdk11
-  - # do stuff with OpenJDK 11
+  - jdk_switcher use oraclejdk8
+  - # do stuff with Oracle JDK 8
   - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh
   - chmod +x $TRAVIS_BUILD_DIR/install-jdk.sh
   - export JAVA_HOME=$HOME/openjdk11
-  - $TRAVIS_BUILD_DIR/install-jdk.sh -F 11 --target $JAVA_HOME
+  - $TRAVIS_BUILD_DIR/install-jdk.sh -F 8 --target $JAVA_HOME
   - ./gradlew connectedAndroidTest
