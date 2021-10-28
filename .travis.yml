@@ -48,5 +48,3 @@ script:
   - export JAVA_HOME=$HOME/openjdk11
   - $TRAVIS_BUILD_DIR/install-jdk.sh -F 11 --target $JAVA_HOME  
   - ./gradlew clean build
-  - ./gradlew test
-  - ./gradlew build check
