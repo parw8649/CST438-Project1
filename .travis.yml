@@ -1,24 +1,39 @@
 #Got a new script! Snagged this bad boy from
 #https://github.com/pestrada/android-tdd-playground/blob/master/.travis.yml
 language: android
-jdk: openjdk11
+jdk: oraclejdk8
 
 android:
+  licenses:
+    - 'android-sdk-preview-license-.+'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
+ 
   components:
     - tools
-    - platform-tools
+    - build-tools-30.0.2
     - tools
     - android-30
     - android-22
+    - extra-google-google_play_services
+    - extra-google-m2repository
     - extra-android-m2repository
-  licenses:
-    - 'android-sdk-preview-license-52d11cd2'
-    - 'android-sdk-license-.+'
-    - 'google-gdk-license-.+'
-
+    - sys-img-armeabi-v7a-android-22
+ 
 before_install:
+  - chmod +x gradlew
   - yes | sdkmanager "platforms;android-30"
-  - yes | sdkmanager "build-tools;30.0.2"
+
+before_script:
+  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
+  - emulator -avd test -no-audio -no-window &
+  - bash android-wait-for-emulator
+  - adb shell input keyevent 82 &
+  
+script:
+  - ./gradlew clean build
+  - ./gradlew test
+  - ./gradlew build check
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -29,14 +44,3 @@ cache:
   - $HOME/.gradle/caches/
   - $HOME/.gradle/wrapper/
   - $HOME/.android/build-cache
-
-before_script:
- - chmod +x gradlew
- # Create and start emulator
- - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
- - emulator -avd test -no-skin -no-audio -no-window &
- - android-wait-for-emulator
- - adb shell input keyevent 82 &
-
-script:
-  - ./gradlew connectedAndroidTest
