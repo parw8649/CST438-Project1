@@ -1,7 +1,9 @@
 #Got a new script! Snagged this bad boy from
 #https://github.com/pestrada/android-tdd-playground/blob/master/.travis.yml
 language: android
-jdk: oraclejdk8
+jdk: 
+ - oraclejdk8
+ - openjdk11
 
 android:
   licenses:
