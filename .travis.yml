@@ -25,7 +25,7 @@ before_script:
  - adb shell input keyevent 82 &
 
 
-jdk: oraclejdk8
+jdk: openjdk11
 script:
   - jdk_switcher use openjdk11
   - # do stuff with openjdk 11
