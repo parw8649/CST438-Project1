@@ -2,17 +2,16 @@
 #https://github.com/pestrada/android-tdd-playground/blob/master/.travis.yml
 language: android
 jdk: openjdk11
-sudo: false
 
 android:
  components:
    - platform-tools
    - tools
-   - build-tools-30.0.2
+   - build-tools-29.0.3
    - android-22
    - android-29
    - android-24
-   - sys-img-armeabi-v7a-android-22
+   - sys-img-armeabi-v7a-android-29
    - sys-img-
    - extra-android-m2repository
 
