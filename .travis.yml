@@ -43,7 +43,6 @@ cache:
   - $HOME/.android/build-cache
   
 script:
-  - jdk_switcher use openjdk11
   - # do stuff with openjdk 11
   - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh
   - chmod +x $TRAVIS_BUILD_DIR/install-jdk.sh
