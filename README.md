@@ -1,4 +1,4 @@
-# CST438-Project1
+Fitness Tracker
 
 Title :- Fitness App
 
